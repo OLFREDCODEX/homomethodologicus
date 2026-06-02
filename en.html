@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Homo Methodologicus: an independent space to explore, discuss and innovate social research methodology.">
+  <meta property="og:title" content="Homo Methodologicus">
+  <meta property="og:description" content="Where methodology becomes a field of study.">
+  <meta property="og:type" content="website">
+  <title>Homo Methodologicus</title>
+  <style>
+    :root {
+      --ink: #242526;
+      --muted: #62666a;
+      --line: #dfe3e6;
+      --paper: #fbfaf7;
+      --white: #ffffff;
+      --mist: #eef5f0;
+      --sage: #6f9480;
+      --clay: #a45e45;
+      --blue: #44677d;
+      --gold: #b58a3c;
+      --radius: 8px;
+      --shadow: 0 18px 60px rgba(37, 44, 48, 0.1);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(223, 227, 230, 0.9);
+      background: rgba(251, 250, 247, 0.92);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 68px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-family: var(--serif);
+      font-size: 1.18rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .brand em {
+      color: var(--clay);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .nav-links a,
+    .lang a {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 0 13px;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .nav-links a:hover,
+    .lang a:hover {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .lang a {
+      min-width: 42px;
+      border-radius: 0;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.06em;
+    }
+
+    .lang .active {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 0 18px;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      background: var(--clay);
+      color: var(--white);
+    }
+
+    .button.secondary {
+      background: var(--white);
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    .hero {
+      width: min(1180px, calc(100% - 40px));
+      min-height: calc(100vh - 68px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.88fr);
+      align-items: center;
+      gap: 56px;
+      padding: 72px 0 64px;
+    }
+
+    .eyebrow,
+    .section-kicker {
+      margin: 0 0 18px;
+      color: var(--sage);
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .hero h1,
+    .section h2,
+    .cta h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      font-size: clamp(3.1rem, 8vw, 6.8rem);
+    }
+
+    .hero h1 em,
+    .section h2 em,
+    .cta h2 em {
+      color: var(--clay);
+      font-style: italic;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: clamp(1.04rem, 2vw, 1.22rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .method-visual {
+      position: relative;
+      min-height: 540px;
+      border: 1px solid rgba(223, 227, 230, 0.95);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(140deg, rgba(238, 245, 240, 0.94), rgba(255, 255, 255, 0.86)),
+        radial-gradient(circle at top left, rgba(164, 94, 69, 0.16), transparent 36%),
+        radial-gradient(circle at bottom right, rgba(68, 103, 125, 0.14), transparent 34%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .method-visual::before {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(36, 37, 38, 0.12);
+      border-radius: 50%;
+    }
+
+    .method-visual::after {
+      content: "";
+      position: absolute;
+      inset: 94px;
+      border: 1px dashed rgba(36, 37, 38, 0.18);
+      border-radius: 50%;
+    }
+
+    .visual-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 178px;
+      min-height: 178px;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      border: 1px solid rgba(36, 37, 38, 0.14);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      line-height: 1.12;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .node {
+      position: absolute;
+      z-index: 3;
+      width: min(42%, 190px);
+      border: 1px solid rgba(36, 37, 38, 0.14);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.88);
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(37, 44, 48, 0.08);
+    }
+
+    .node strong {
+      display: block;
+      color: var(--ink);
+      font-size: 0.94rem;
+      line-height: 1.3;
+    }
+
+    .node span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    .node.one {
+      top: 40px;
+      left: 34px;
+      border-top: 4px solid var(--clay);
+    }
+
+    .node.two {
+      top: 76px;
+      right: 30px;
+      border-top: 4px solid var(--blue);
+    }
+
+    .node.three {
+      right: 38px;
+      bottom: 58px;
+      border-top: 4px solid var(--gold);
+    }
+
+    .node.four {
+      left: 34px;
+      bottom: 86px;
+      border-top: 4px solid var(--sage);
+    }
+
+    .section {
+      width: min(980px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 88px 0;
+    }
+
+    .section.wide {
+      width: min(1180px, calc(100% - 40px));
+    }
+
+    .section h2 {
+      max-width: 760px;
+      font-size: clamp(2rem, 4.6vw, 3.6rem);
+    }
+
+    .lead {
+      max-width: 740px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 56px;
+      align-items: start;
+      margin-top: 42px;
+    }
+
+    .quote {
+      margin: 0;
+      border-left: 4px solid var(--clay);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      background: var(--white);
+      padding: 24px 26px;
+      box-shadow: 0 10px 34px rgba(37, 44, 48, 0.06);
+      font-family: var(--serif);
+      font-size: 1.28rem;
+      line-height: 1.46;
+    }
+
+    .copy-block p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .band {
+      border-block: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 38px;
+    }
+
+    .principle {
+      min-height: 220px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      background: var(--paper);
+    }
+
+    .principle .mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: var(--sage);
+      margin-bottom: 28px;
+    }
+
+    .principle:nth-child(2) .mark {
+      background: var(--blue);
+    }
+
+    .principle:nth-child(3) .mark {
+      background: var(--clay);
+    }
+
+    .principle h3,
+    .activity h3 {
+      margin: 0 0 10px;
+      font-size: 1.06rem;
+      line-height: 1.3;
+    }
+
+    .principle p,
+    .activity p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .activity-list {
+      margin-top: 38px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      overflow: hidden;
+    }
+
+    .activity {
+      display: grid;
+      grid-template-columns: 80px minmax(0, 1fr);
+      gap: 24px;
+      padding: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .activity:last-child {
+      border-bottom: 0;
+    }
+
+    .activity code {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--mist);
+      color: var(--sage);
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+
+    .cta {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 60px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(110deg, rgba(36, 37, 38, 0.94), rgba(44, 60, 66, 0.92)),
+        radial-gradient(circle at right, rgba(181, 138, 60, 0.45), transparent 36%);
+      color: var(--white);
+      padding: clamp(42px, 7vw, 76px);
+      overflow: hidden;
+    }
+
+    .cta h2 {
+      max-width: 720px;
+      font-size: clamp(2rem, 5vw, 4rem);
+    }
+
+    .cta p {
+      max-width: 620px;
+      margin: 22px 0 0;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 1.05rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .cta .button.secondary {
+      color: var(--white);
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.34);
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .footer-inner {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 92px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 940px) {
+      .nav {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        padding-top: 54px;
+      }
+
+      .method-visual {
+        min-height: 470px;
+      }
+
+      .split,
+      .principles {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .nav {
+        min-height: 76px;
+      }
+
+      .brand {
+        font-size: 1rem;
+      }
+
+      .nav-actions .button {
+        display: none;
+      }
+
+      .hero,
+      .section,
+      .section.wide,
+      .cta,
+      .footer-inner {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.65rem, 17vw, 4rem);
+      }
+
+      .method-visual {
+        min-height: 540px;
+      }
+
+      .node {
+        width: calc(100% - 48px);
+      }
+
+      .node.one,
+      .node.two,
+      .node.three,
+      .node.four {
+        left: 24px;
+        right: auto;
+      }
+
+      .node.one {
+        top: 24px;
+      }
+
+      .node.two {
+        top: 138px;
+      }
+
+      .node.three {
+        bottom: 138px;
+      }
+
+      .node.four {
+        bottom: 24px;
+      }
+
+      .visual-center {
+        width: 142px;
+        min-height: 142px;
+        font-size: 1.02rem;
+      }
+
+      .activity {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 24px;
+      }
+
+      .footer-inner {
+        padding: 24px 0;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="en.html">Homo <em>Methodo</em>logicus</a>
+      <ul class="nav-links">
+        <li><a href="#project">Project</a></li>
+        <li><a href="#principles">Principles</a></li>
+        <li><a href="#activities">Activities</a></li>
+        <li><a href="#community">Community</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang" aria-label="Language">
+          <a href="index.html">IT</a>
+          <a class="active" href="en.html" aria-current="page">EN</a>
+        </div>
+        <a class="button primary" href="https://discord.gg/FxhKhTmH2" target="_blank" rel="noopener">Join</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Social research methodology</p>
+        <h1>Where <em>methodology</em> becomes a field of study.</h1>
+        <p class="hero-copy">Homo Methodologicus is an independent space to explore, experiment with and critically discuss the tools of social research, their transformations and the possibilities still waiting to be explored.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="https://discord.gg/FxhKhTmH2" target="_blank" rel="noopener">Join the community</a>
+          <a class="button secondary" href="#project">Discover the project</a>
+        </div>
+      </div>
+
+      <div class="method-visual" aria-label="Methodological cycle">
+        <div class="visual-center">Method as an object of research</div>
+        <div class="node one">
+          <strong>Question</strong>
+          <span>Clarify what to observe and why.</span>
+        </div>
+        <div class="node two">
+          <strong>Design</strong>
+          <span>Build robust and transparent procedures.</span>
+        </div>
+        <div class="node three">
+          <strong>Data</strong>
+          <span>Turn tools and practices into evidence.</span>
+        </div>
+        <div class="node four">
+          <strong>Interpretation</strong>
+          <span>Make limits, choices and alternatives visible.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="project">
+      <p class="section-kicker">The project</p>
+      <h2>Methodological <em>innovation</em> needs an autonomous space.</h2>
+      <div class="split">
+        <blockquote class="quote">Homo Methodologicus was created to build a territory where methodology is not only a tool, but a field of research, discussion and experimentation.</blockquote>
+        <div class="copy-block">
+          <p>Social research methodology is often treated as a set of techniques serving other disciplines. Here, it becomes the focus: a place to question procedures, improve tools and make the knowledge we produce more reliable.</p>
+          <p>In a moment shaped by artificial intelligence, digitalization and new forms of data production, this reflection cannot remain peripheral. Research practices are changing quickly; method must be able to change with them, critically and collectively.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="band" id="principles">
+      <section class="section wide reveal">
+        <p class="section-kicker">Principles</p>
+        <h2>Better methods produce more responsible knowledge.</h2>
+        <p class="lead">The community works on what makes research clearer, more comparable and more useful: design, tools, transparency, interpretation and social impact.</p>
+        <div class="principles">
+          <article class="principle">
+            <div class="mark">01</div>
+            <h3>Methodological autonomy</h3>
+            <p>Methodology as a specific object of research, not merely as a technical appendix to other fields.</p>
+          </article>
+          <article class="principle">
+            <div class="mark">02</div>
+            <h3>Open experimentation</h3>
+            <p>Tools, protocols and ideas are discussed, tested and improved through exchange across different perspectives.</p>
+          </article>
+          <article class="principle">
+            <div class="mark">03</div>
+            <h3>Scientific responsibility</h3>
+            <p>Every methodological choice makes part of reality more or less visible: it should be stated, criticized and cared for.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <section class="section reveal" id="activities">
+      <p class="section-kicker">Taking shape</p>
+      <h2>Activities in progress.</h2>
+      <p class="lead">Homo Methodologicus grows through concrete initiatives open to researchers, methodologists, students and anyone interested in improving social research practices.</p>
+      <div class="activity-list">
+        <article class="activity">
+          <code>01</code>
+          <div>
+            <h3>Online community</h3>
+            <p>A Discord space for discussion, critical exchange, methodological questions and collective construction of better practices.</p>
+          </div>
+        </article>
+        <article class="activity">
+          <code>02</code>
+          <div>
+            <h3>Digital tools for research</h3>
+            <p>Development and experimentation of tools that support research design, data collection, analysis and interpretation.</p>
+          </div>
+        </article>
+        <article class="activity">
+          <code>03</code>
+          <div>
+            <h3>Dialogue across disciplines and methods</h3>
+            <p>An open comparison between approaches, traditions and languages, with one shared goal: improving the quality of social research.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cta reveal" id="community">
+      <p class="section-kicker">Community</p>
+      <h2>The community <em>is</em> the method.</h2>
+      <p>Homo Methodologicus is built together. If you work in research, teach methodology, study social sciences or want to contribute to better tools, this space is also yours.</p>
+      <div class="cta-actions">
+        <a class="button primary" href="https://discord.gg/FxhKhTmH2" target="_blank" rel="noopener">Join on Discord</a>
+        <a class="button secondary" href="mailto:info@homomethodologicus.com">Write to us</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>Homo <em>Methodo</em>logicus · 2026</div>
+      <div class="footer-links">
+        <a href="https://homomethodologicus.com">homomethodologicus.com</a>
+        <a href="https://homomethodologicus.it">homomethodologicus.it</a>
+        <a href="https://discord.gg/FxhKhTmH2" target="_blank" rel="noopener">Discord</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+
+    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+  </script>
+</body>
+</html>
